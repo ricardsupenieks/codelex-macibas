@@ -294,5 +294,7 @@ if ($input == 1) {
 
         echo "Area of triangle: " . $triangle->areaOfTriangle($triangle->triangleHeight, $triangle->triangleBase); echo PHP_EOL;
     } else if ($input == 4) {
-    exit;
-}
+        exit;
+    } else {
+    echo "invalid input";
+}    
