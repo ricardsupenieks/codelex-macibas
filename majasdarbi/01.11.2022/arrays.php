@@ -126,13 +126,11 @@ echo "########## EXERCISE 5 #################"; echo PHP_EOL; echo PHP_EOL;
 
 error_reporting(E_ALL & ~E_NOTICE);
 
-$blocks = [
-    [[], [], []],
-    [[], [], []],
-    [[], [], []]
+$cells = [
+    [' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']
 ];
-
-$cells = $blocks[0];
 
 $turns = 0;
 $maxTurns = 9;
@@ -162,7 +160,7 @@ function xPutter() {
 
         if (in_array("-", $x) || ($x[0]) > 2 || $x[1] > 2) {
             echo "Please choose values from 0 to 2"; echo PHP_EOL;
-        } else if ($cells[$x[0]][$x[1]] !== null) {
+        } else if ($cells[$x[0]][$x[1]] !== ' ') {
             echo "This spot is already taken"; echo PHP_EOL;
         } else {
             $cells[$x[0]][$x[1]] = 'X';
@@ -184,7 +182,7 @@ function oPutter() {
 
         if (in_array("-", $o) || $o[0] > 2 || $o[1] > 2) {
             echo "Please choose values from 0 to 2"; echo PHP_EOL;
-        } else if ($cells[$o[0]][$o[1]] !== null) {
+        } else if ($cells[$o[0]][$o[1]] !== ' ') {
             echo "This spot is already taken"; echo PHP_EOL;
         } else {
             $cells[$o[0]][$o[1]] = 'O';
