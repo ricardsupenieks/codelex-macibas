@@ -118,17 +118,19 @@ $input = strtolower($input);
 $input = str_split($input);
 
 foreach ($input as $inputLetter) {
-        foreach ($keyPad as $number => $letters) {
-            foreach ($letters as $letter) {
-                if (is_string($inputLetter)) {
-                    if ($inputLetter === $letter) {
-                        echo str_repeat($number, array_search($letter, $letters) + 1);
-                        echo ' ';
-                    }
-                } else {
-                    echo  "please input letters only";
+    foreach ($keyPad as $number => $letters) {
+        foreach ($letters as $letter) {
+            if (is_numeric($inputLetter)) {
+                echo "please input letters only";
+                exit;
+            } else {
+                if ($inputLetter === $letter) {
+                    echo str_repeat($number, array_search($letter, $letters) + 1);
+                    echo ' ';
                 }
             }
         }
     }
+}        
+
 echo PHP_EOL . PHP_EOL;
