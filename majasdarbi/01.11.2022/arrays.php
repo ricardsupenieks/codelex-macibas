@@ -197,7 +197,7 @@ function oPutter() {
 function winner() {
     global $cells, $turns, $maxTurns;
 
-    // if x win horizontal
+    // if x horizontal
     if ($cells[0][0] === 'X' && $cells[0][1] === 'X' && $cells[0][2] === 'X') {
         echo "'X' won";
         exit;
@@ -209,7 +209,7 @@ function winner() {
         exit;
     }
 
-    // if x win vertical
+    // if x vertical
      else if ($cells[0][0] === 'X' && $cells[1][0] === 'X' && $cells[2][0] === 'X') {
         echo "'X' won";
         exit;
@@ -271,7 +271,7 @@ function winner() {
 
 }
 
-function playGame() {
+while ($turns <= $maxTurns)  {
     display_board();
     xPutter();
     display_board();
@@ -279,11 +279,6 @@ function playGame() {
     oPutter();
     display_board();
     winner();
-}
-
-
-while ($turns <= $maxTurns) {
-    playGame();
 }
 
 
