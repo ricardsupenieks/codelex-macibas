@@ -34,7 +34,7 @@ echo "########## EXERCISE 2 #################"; echo PHP_EOL; echo PHP_EOL;
 
 $number = readline("Enter number: ");
 
-if ($number > 0) {
+if ((int)$number > 0) {
     echo "number is positive"; echo PHP_EOL;
 } else {
     echo "number is negative"; echo PHP_EOL;
@@ -54,7 +54,7 @@ do {
     if ((int)$positiveInteger < 0 || (int)is_float($positiveInteger)) {
         echo "please enter positive integer only";
     }
-} while ($positiveInteger < 0 || is_float($positiveInteger));
+} while ((int)$positiveInteger < 0 || (int)is_float($positiveInteger));
 
 echo strlen($positiveInteger); echo PHP_EOL;
 
