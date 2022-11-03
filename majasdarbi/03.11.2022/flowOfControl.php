@@ -117,20 +117,27 @@ $input = readline("Input: ");
 $input = strtolower($input);
 $input = str_split($input);
 
+foreach($input as $inputCharacter) {
+    if (is_numeric($inputCharacter)) {
+        echo "please enter letters only";
+        echo PHP_EOL;
+        exit;
+    }
+}
+
 foreach ($input as $inputLetter) {
     foreach ($keyPad as $number => $letters) {
         foreach ($letters as $letter) {
-            if (is_numeric($inputLetter)) {
-                echo "please input letters only";
-                exit;
-            } else {
-                if ($inputLetter === $letter) {
+            if (ctype_upper($inputLetter)) {
+                $inputLetter = strtolower($inputLetter);
+                } if ($inputLetter === $letter) {
                     echo str_repeat($number, array_search($letter, $letters) + 1);
                     echo ' ';
-                }
             }
         }
     }
-}        
+}
+
+echo PHP_EOL . PHP_EOL;       
 
 echo PHP_EOL . PHP_EOL;
