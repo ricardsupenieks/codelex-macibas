@@ -46,7 +46,6 @@ function winner() {
     global $screen, $winner, $win;
 
     if ($screen[0] === $screen[1] && $screen[1] === $screen[2] && $screen[2] === $screen[3] && $screen[3] === $screen[4]) {
-        $winner = true;
         echo "WIN" . PHP_EOL;
         symbolChecker(0, "*", 10);
         symbolChecker(0, "+", 20);
@@ -55,7 +54,6 @@ function winner() {
         echo "You've won {$win}$!" . PHP_EOL;
 
     } else if ($screen[5] === $screen[6] && $screen[6] === $screen[7] && $screen[7] === $screen[8] && $screen[8] === $screen[9]) {
-        $winner = true;
         echo "WIN" . PHP_EOL;;
         symbolChecker(5, "*", 10);
         symbolChecker(5, "+", 20);
@@ -64,7 +62,6 @@ function winner() {
         echo "You've won {$win}$!" . PHP_EOL;
 
     } else if ($screen[10] === $screen[11] && $screen[11] === $screen[12] && $screen[12] === $screen[13] && $screen[13] === $screen[14]) {
-        $winner = true;
         echo "WIN" . PHP_EOL;;
         symbolChecker(10, "*", 10);
         symbolChecker(10, "+", 20);
@@ -76,7 +73,6 @@ function winner() {
 
 
     if ($screen[0] === $screen[6] && $screen[6] === $screen[12] && $screen[12] === $screen[8] && $screen[8] === $screen[4]) {
-        $winner = true;
         echo "WIN" . PHP_EOL;;
         symbolChecker(0, "*", 10);
         symbolChecker(0, "+", 20);
@@ -85,7 +81,6 @@ function winner() {
         echo "You've won {$win}$!" . PHP_EOL;
 
     } else if ($screen[10] === $screen[6] && $screen[6] === $screen[2] && $screen[2] === $screen[8] && $screen[8] === $screen[14]) {
-        $winner = true;
         echo "WIN" . PHP_EOL;
         symbolChecker(10, "*", 10);
         symbolChecker(10, "+", 20);
@@ -139,8 +134,6 @@ while (true) {
                 $screen[$i] = "$";
             }
         }
-
-        $winner = false;
 
 
         displayScreen();
