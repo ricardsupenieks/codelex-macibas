@@ -1,0 +1,111 @@
+$products = [
+    ["Hennessy" => 3000],
+
+    ["Snickers" => 120],
+
+    ["Apple" => 50],
+
+    ["Cigarettes" => 400]];
+
+$coinsInMachine = [
+    200 => 1,
+    100 => 1,
+    50 => 1,
+    20 => 1,
+    10 => 1,
+    5 => 1,
+    2 => 1,
+    1 => 1
+
+];
+
+while(true) {
+    //coin input loop
+
+    $userMoneyEuro = 0;
+    while (true) {
+        echo "Input coins into the coin slot" . PHP_EOL;
+        (int)$userMoney = readline();
+        if ($userMoney > 2) {
+            echo "Input coins only" . PHP_EOL;
+        } else {
+            $userMoneyEuro = $userMoneyEuro + $userMoney;
+            echo PHP_EOL . "Total: $userMoneyEuro" . PHP_EOL;
+            echo "Press Enter when you are done" . PHP_EOL . PHP_EOL;
+        }
+
+        if ($userMoney === "") {
+            break;
+        }
+    }
+
+    $userMoneyCents = $userMoneyEuro * 100;
+
+
+// product selection
+    echo PHP_EOL;
+
+    while(true) {
+        $productCount = 0;
+        foreach ($products as $product) {
+            $productCount += 1;
+        }
+
+        for ($i = 0; $i < $productCount; $i++) {
+            foreach ($products[$i] as $product => $cost) {
+                $trueCost = $cost / 100;
+                echo "$i $product = $trueCost$" . PHP_EOL;
+            }
+        }
+        echo PHP_EOL;
+
+        (int)$userChoice = readline("Select the product: ");
+
+        echo PHP_EOL;
+
+        $lastProductIndex = $productCount - 1;
+        if($userChoice > $lastProductIndex) {
+            echo "Invalid number" . PHP_EOL .PHP_EOL;
+        } else if($userMoneyCents < implode($products[$userChoice])) {
+            echo "Insufficient funds" . PHP_EOL;
+            exit;
+        } else {
+            break;
+        }
+    }
+
+
+//change/coins outputted
+    $userChange = $userMoneyCents - implode($products[$userChoice]);
+
+    if ($userChange < 0) {
+        echo "You don't have enough money for that item" . PHP_EOL;
+    }
+
+    $totalChangeInMachine = 0;
+    foreach ($coinsInMachine as $coin => $amount) {
+        $totalChangeInMachine += $coin * $amount;
+    }
+
+    if ($userChange - $totalChangeInMachine <= 0) {
+        foreach ($coinsInMachine as $coin => $amount) {
+            $totalChangeInMachine = 0;
+            $totalChangeInMachine += $coin * $amount;
+            if ($amount !== 0) {
+                $amount--;
+                if ($userChange - $coin >= 0) {
+                    $coinCents = $coin / 100;
+                    echo intdiv($userChange, $coin);
+                    echo " $coinCents $ coin" . PHP_EOL;
+                    $userChange = $userChange - $coin;
+                }
+            }
+        }
+        $userChange = ($userMoneyCents - implode($products[$userChoice])) / 100;
+        echo PHP_EOL . "Your change: $userChange$" . PHP_EOL;
+        exit;
+    } else {
+        echo "Not enough change in machine. Please contact support" . PHP_EOL;
+        exit;
+    }
+}
