@@ -162,11 +162,11 @@ $asciiFigure->create($size);
 
 
 
-// EXERCISE 6
+// EXERCISE 7
 
 
 
-echo "########## EXERCISE 6 #################"; echo PHP_EOL; echo PHP_EOL;
+echo "########## EXERCISE 7 #################"; echo PHP_EOL; echo PHP_EOL;
 
 
 class RollTwoDice {
