@@ -159,3 +159,36 @@ class AsciiFigure{
 $asciiFigure = new AsciiFigure();
 $size = readline("select size: ");
 $asciiFigure->create($size);
+
+
+
+// EXERCISE 6
+
+
+
+echo "########## EXERCISE 6 #################"; echo PHP_EOL; echo PHP_EOL;
+
+
+class RollTwoDice {
+    public $sum;
+
+    public function __constructor($sum){
+        $this->sum = $sum;
+    }
+
+    public function play(){
+        $this->sum = (int) readline("Desired sum: ");
+        while (true) {
+            $number1 = rand(1, 6);
+            $number2 = rand(1, 6);
+            $sumOfNumbers = $number1 + $number2;
+            echo "$number1 and $number2 = $sumOfNumbers" . PHP_EOL;
+            if ($sumOfNumbers === $this->sum) {
+                exit;
+            }
+        }
+    }
+}
+
+$game = new RollTwoDice();
+$game->play();
