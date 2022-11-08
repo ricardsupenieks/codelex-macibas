@@ -319,8 +319,8 @@ echo "########## EXERCISE 8 #################"; echo PHP_EOL; echo PHP_EOL;
 
 
 class SavingsAccount {
-    private int $annualInterestRate;
-    private int $balance;
+    private float $annualInterestRate;
+    public float $balance;
     private int $monthsOpened;
 
     public function __construct($balance, $annualInterestRate, $monthsOpened){
@@ -329,61 +329,67 @@ class SavingsAccount {
         $this->monthsOpened = $monthsOpened;
     }
 
+    public function getBalance(): float{
+        return $this->balance;
+    }
+
     public function getMonthsOpened(): int{
         return $this->monthsOpened;
     }
 
-    public function getBalance() {
-        return $this->balance;
+
+    public function withdraw($amount): float{
+        return $this->balance - $amount;
     }
 
-    public function withdraw($amount){
-        return $this->balance = $this->balance - $amount;
+    public function deposit($amount): float{
+        return $this->balance + $amount;
     }
 
-    public function deposit($amount){
-        return $this->balance = $this->balance + $amount;
+    public function monthlyInterestRate(): float{
+        return $this->balance * ($this->annualInterestRate / 12);
     }
-
-    public function addMonthlyInterestRate(){
-        return $this->balance = $this->balance + ($this->balance * ($this->annualInterestRate / 12));
-    }
-
 }
 
-$account1 = new SavingsAccount( readline("How much money is in the account?: "),
-                                readline("Enter annual interest rate: "),
-                                readline("How long has the account been opened?: "));
+$balance = readline("How much money is in the account?: ");
+$interestRate = readline("Enter annual interest rate: ");
+$months = readline("How long has the account been opened?: ");
 
-function calculateBalanceAfterXMonths() {
-    global $account1;
+$account = new SavingsAccount($balance, $interestRate, $months);
 
+function calculateBalanceAfterXMonths($account) {
+
+    $startingMoney = $account->getBalance();
     $totalDeposited = 0;
     $totalWithdrawn = 0;
     $interestEarned = 0;
-    for($i = 1; $i <= $account1->getMonthsOpened(); $i++) {
-        $account1->deposit((int) $answer = readline("Enter the amount deposited for month $i: "));
-        $totalDeposited = $totalDeposited + $answer;
-        echo PHP_EOL;
-        $account1->withdraw((int)$answer2 = readline("Enter the amount withdrawn for month $i: "));
-        $totalWithdrawn = $totalWithdrawn + $answer2;
-        echo PHP_EOL;
-        $account1->addMonthlyInterestRate();
-        $interestEarned = $account1->addMonthlyInterestRate();
+
+    for ($i = 1; $i <= $account->getMonthsOpened(); $i++) {
+        $deposited = (float) readline("Enter amount deposited for month: $i: ");
+        $totalDeposited = $totalDeposited + $deposited;
+        $account->balance = $account->deposit($deposited);
+
+        $withdrawn = (float) readline("Enter the amount withdrawn for month: $i: ");
+        $totalWithdrawn = $totalWithdrawn + $withdrawn;
+        $account->balance = $account->withdraw($withdrawn);
+
+        $interestEarned = $interestEarned + $account->monthlyInterestRate();
+        $account->balance = $account->getBalance() + $account->monthlyInterestRate();
+
     }
-    echo "Total deposited: " . number_format((float)$totalDeposited, 2) . PHP_EOL;
-    echo "Total withdrawn: " . number_format((float)$totalWithdrawn, 2) . PHP_EOL;
-    echo "Interest earned: " . number_format((float)$interestEarned, 2) . PHP_EOL;
+    echo "$" . number_format(round($totalDeposited, 2), 2) . PHP_EOL;
+    echo "$" . number_format(round($totalWithdrawn, 2), 2) . PHP_EOL;
+    echo "$" . number_format(round($interestEarned, 2), 2) . PHP_EOL;
 
-    $endingBalance = $account1->getBalance() + $totalDeposited - $totalWithdrawn + $interestEarned;
-
-    echo "Ending balance: $endingBalance";
-
+    $total = $startingMoney + $totalDeposited - $totalWithdrawn + $interestEarned;
+    return "$" .  number_format(round($total, 2), 2);
 }
 
-calculateBalanceAfterXMonths();
+echo calculateBalanceAfterXMonths($account);
 
 echo PHP_EOL . PHP_EOL;
+
+
 
 // EXERCISE 9
 
