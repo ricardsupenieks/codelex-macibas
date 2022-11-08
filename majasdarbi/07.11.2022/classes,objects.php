@@ -93,61 +93,318 @@ echo "########## EXERCISE 3 #################"; echo PHP_EOL; echo PHP_EOL;
 
 
 class FuelGauge {
-    public int $fuel;
+    private int $fuel;
 
     public function __construct(int $fuel) {
         $this->fuel = $fuel;
     }
 
-    public function reportFuel(){
-        echo $this->fuel . PHP_EOL;
-    }
-
-    public function refill() {
-        if($this->fuel < 70) {
-            $this->fuel++;
-        } else {
-            echo "Fuel tank is full" . PHP_EOL;
-        }
+    public function getAmount(): int{
         return $this->fuel;
     }
 
-    public function burn(){
+    public function fill(int $fillAmount = 1): void {
+        if($this->fuel + $fillAmount <= 70) {
+            $this->fuel += $fillAmount;
+        } else {
+            $this->fuel = 70;
+        }
+    }
+
+    public function use(){
         if($this->fuel > 0) {
             $this->fuel--;
-        } else {
-            echo "Fuel tank is empty" . PHP_EOL;
         }
-        return $this->fuel;
     }
 }
 
-$honda = new FuelGauge(67);
-$honda->refill();
-$honda->refill();
-$honda->refill();
-
 
 class Odometer {
-    public $mileage;
+    private int $mileage;
 
-    public function __constructor($mileage) {
+    public function __construct(int $mileage = 0) {
         $this->mileage = $mileage;
     }
 
-    public function reportMileage() {
-        echo $this->mileage;
+    public function getMileage(): int {
+        return $this->mileage;
     }
 
-    public function increase():int {
-        $this->mileage++;
-        if ($this->mileage = 1000000) {
+    public function increase(int $amount = 1):int {
+
+        $this->mileage+=$amount;
+        if ($this->mileage === 1000000) {
             $this->mileage = 0;
         }
         return $this->mileage;
     }
+}
 
-    public function fuelEconomy(){
+$fuelGauge = new FuelGauge(2);
+$odometer = new Odometer();
+
+while ($fuelGauge->getAmount() > 0) {
+    echo "1km driven" . PHP_EOL;
+
+    $odometer->increase();
+
+    if ($odometer->getMileage() % 10 === 0) {
+        $fuelGauge->use();
+        echo "1L used" . PHP_EOL;
+    }
+
+}
+
+echo PHP_EOL;
+
+// EXERCISE 4
+
+
+
+echo "########## EXERCISE 4 #################"; echo PHP_EOL; echo PHP_EOL;
+
+
+class Movie {
+    private $title;
+    private $studio;
+    private $rating;
+
+    public function __construct(string $title, string $studio, string $rating){
+        $this->rating = $rating;
+        $this->studio = $studio;
+        $this->title = $title;
+    }
+
+    public function getPG($movies) {
+        $PGMovies = [];
+        foreach ($movies as $movie) {
+            if($movie->rating === "PG") {
+                $PGMovies[]=$movie;
+            }
+        }
+        return $PGMovies;
+    }
+}
+
+$movie1 = new Movie("Casino Royale", "Eon Productions", "PG13");
+$movie2 = new Movie("Glass", "Buena Vista", "PG13");
+$movie3 = new Movie("Spider Man", "Columbia pictures", "PG");
+
+$movies = [
+    $movie1,
+    $movie2,
+    $movie3
+];
+
+
+
+// EXERCISE 5
+
+
+
+echo "########## EXERCISE 5 #################"; echo PHP_EOL; echo PHP_EOL;
+
+
+class Date {
+    private int $month;
+    private int $day;
+    private int $year;
+
+    public function __construct(int $month, int $day, int $year){
+        $this->year = $year;
+        $this->day = $day;
+        $this->month = $month;
+    }
+
+    public function displayDate(){
+        return $this->month . "/" . $this->day . "/" . $this->year . PHP_EOL;
+    }
+}
+
+$date = new Date(02, 14,2990);
+echo $date->displayDate();
+echo PHP_EOL;
+
+
+
+// EXERCISE 6
+
+
+
+echo "########## EXERCISE 6 #################"; echo PHP_EOL; echo PHP_EOL;
+
+
+$surveyed = 12467;
+$purchased_energy_drinks = 0.14;
+$prefer_citrus_drinks = 0.64;
+
+function calculate_energy_drinkers(int $numberSurveyed, float $purchasedEnergyDrink) {
+    return $numberSurveyed * $purchasedEnergyDrink;
+}
+
+function calculate_prefer_citrus(int $numberSurveyed, float $purchasedEnergyDrink, float $preferCitrus)
+{
+    return ($numberSurveyed * $purchasedEnergyDrink) * $preferCitrus;
+}
+
+
+echo "Total number of people surveyed " . $surveyed . PHP_EOL;
+echo "Approximately " . calculate_energy_drinkers($surveyed, $purchased_energy_drinks) . " bought at least one energy drink" . PHP_EOL;
+echo  calculate_prefer_citrus($surveyed, $purchased_energy_drinks, $prefer_citrus_drinks). " of those " . "prefer citrus flavored energy drinks." . PHP_EOL;
+
+echo PHP_EOL;
+
+// EXERCISE 7
+
+
+
+echo "########## EXERCISE 7 #################"; echo PHP_EOL; echo PHP_EOL;
+
+
+class Dog {
+    private string $name;
+    private string $sex;
+    private string $mother;
+    private string $father;
+
+    public function __construct($name, $sex, $mother = "Unknown", $father = "Unknown"){
+        $this->name = $name;
+        $this->sex = $sex;
+        $this->mother = $mother;
+        $this->father = $father;
+    }
+
+    public function fathersName():string {
+        return $this->father;
+    }
+
+    public function hasSameMotherAs($dog) {
+        if ($this->father === $dog->fathersName()) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+}
+
+class DogTest {
+    public function createDog(){
+        $max = new Dog("Max", "male", "Lady", "Rocky");
+        $rocky = new Dog("Rocky", "male", "Molly", "Sam");
+        $sparky = new Dog("Sparky", "male");
+        $buster = new Dog("Buster", "male", "Lady", "Sparky");
+        $sam = new Dog("Sam", "male");
+        $lady = new Dog("Lady", "female");
+        $molly = new Dog("Molly", "female");
+        $coco = new Dog("Coco", "female", "Molly", "Buster");
+
+        return $rocky->hasSameMotherAs($sam);
+//        return $rocky->fathersName();
 
     }
 }
+
+$test = new DogTest();
+echo $test->createDog() . PHP_EOL;
+
+echo PHP_EOL;
+
+
+
+// EXERCISE 8
+
+
+
+echo "########## EXERCISE 8 #################"; echo PHP_EOL; echo PHP_EOL;
+
+
+class SavingsAccount {
+    private int $annualInterestRate;
+    private int $balance;
+    private int $monthsOpened;
+
+    public function __construct($balance, $annualInterestRate, $monthsOpened){
+        $this->balance = $balance;
+        $this->annualInterestRate = $annualInterestRate;
+        $this->monthsOpened = $monthsOpened;
+    }
+
+    public function getMonthsOpened(): int{
+        return $this->monthsOpened;
+    }
+
+    public function getBalance() {
+        return $this->balance;
+    }
+
+    public function withdraw($amount){
+        return $this->balance = $this->balance - $amount;
+    }
+
+    public function deposit($amount){
+        return $this->balance = $this->balance + $amount;
+    }
+
+    public function addMonthlyInterestRate(){
+        return $this->balance = $this->balance + ($this->balance * ($this->annualInterestRate / 12));
+    }
+
+}
+
+$account1 = new SavingsAccount( readline("How much money is in the account?: "),
+                                readline("Enter annual interest rate: "),
+                                readline("How long has the account been opened?: "));
+
+function calculateBalanceAfterXMonths() {
+    global $account1;
+
+    $totalDeposited = 0;
+    $totalWithdrawn = 0;
+    $interestEarned = 0;
+    for($i = 1; $i <= $account1->getMonthsOpened(); $i++) {
+        $account1->deposit((int) $answer = readline("Enter the amount deposited for month $i: "));
+        $totalDeposited = $totalDeposited + $answer;
+        echo PHP_EOL;
+        $account1->withdraw((int)$answer2 = readline("Enter the amount withdrawn for month $i: "));
+        $totalWithdrawn = $totalWithdrawn + $answer2;
+        echo PHP_EOL;
+        $account1->addMonthlyInterestRate();
+        $interestEarned = $account1->addMonthlyInterestRate();
+    }
+    echo "Total deposited: " . number_format((float)$totalDeposited, 2) . PHP_EOL;
+    echo "Total withdrawn: " . number_format((float)$totalWithdrawn, 2) . PHP_EOL;
+    echo "Interest earned: " . number_format((float)$interestEarned, 2) . PHP_EOL;
+
+    $endingBalance = $account1->getBalance() + $totalDeposited - $totalWithdrawn + $interestEarned;
+
+    echo "Ending balance: $endingBalance";
+
+}
+
+calculateBalanceAfterXMonths();
+
+echo PHP_EOL . PHP_EOL;
+
+// EXERCISE 9
+
+
+
+echo "########## EXERCISE 9 #################"; echo PHP_EOL;
+
+
+class BankAccount{
+    private $name;
+    private $funds;
+
+    public function __construct(string $name, float $funds){
+        $this->name = $name;
+        $this->funds = $funds;
+    }
+
+    public function show_user_name_and_balance() {
+        return $this->name . ", " . "$" . number_format($this->funds, 2);
+    }
+}
+
+$bob = new BankAccount("bob", 100);
+echo $bob->show_user_name_and_balance() . PHP_EOL . PHP_EOL;
