@@ -157,17 +157,19 @@ while ($fuelGauge->getAmount() > 0) {
 
 echo PHP_EOL;
 
+
 // EXERCISE 4
 
 
 
 echo "########## EXERCISE 4 #################"; echo PHP_EOL; echo PHP_EOL;
+ 
 
 
 class Movie {
-    private $title;
-    private $studio;
-    private $rating;
+    private string $title;
+    private string $studio;
+    private string $rating;
 
     public function __construct(string $title, string $studio, string $rating){
         $this->rating = $rating;
@@ -175,26 +177,28 @@ class Movie {
         $this->title = $title;
     }
 
-    public function getPG($movies) {
-        $PGMovies = [];
+    public function getRating(): string{
+        return $this->rating;
+    }
+
+    public function getPG(array $movies){
+        $filterMovies = [];
         foreach ($movies as $movie) {
-            if($movie->rating === "PG") {
-                $PGMovies[]=$movie;
+            if($movie->getRating() === 'PG') {
+                $filterMovies[] = $movie;
             }
         }
-        return $PGMovies;
+        return $filterMovies;
     }
 }
-
-$movie1 = new Movie("Casino Royale", "Eon Productions", "PG13");
-$movie2 = new Movie("Glass", "Buena Vista", "PG13");
-$movie3 = new Movie("Spider Man", "Columbia pictures", "PG");
-
 $movies = [
-    $movie1,
-    $movie2,
-    $movie3
+    $movie1 = new Movie("Casino Royale", "Eon Productions", "PG13"),
+    $movie2 = new Movie("Glass", "Buena Vista", "PG13"),
+    $movie3 = new Movie("Spider Man", "Columbia pictures", "PG"),
 ];
+
+$movie1->getPG($movies);
+
 
 
 
