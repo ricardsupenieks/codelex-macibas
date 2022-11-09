@@ -181,7 +181,7 @@ class Movie {
         return $this->rating;
     }
 
-    public function getPG(array $movies){
+    public function getPG(array $movies): array {
         $filterMovies = [];
         foreach ($movies as $movie) {
             if($movie->getRating() === 'PG') {
