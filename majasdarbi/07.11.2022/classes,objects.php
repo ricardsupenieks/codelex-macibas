@@ -418,3 +418,180 @@ class BankAccount{
 
 $bob = new BankAccount("bob", 100);
 echo $bob->show_user_name_and_balance() . PHP_EOL . PHP_EOL;
+
+
+// EXERCISE 10
+
+
+
+echo "########## EXERCISE 10 #################"; echo PHP_EOL;
+
+
+class Video
+{
+    private string $title;
+    private bool $checkedOut;
+    private array $ratings;
+
+    public function __construct(string $title, bool $checkedOut = false, array $ratings = [])
+    {
+        $this->title = $title;
+        $this->checkedOut = $checkedOut;
+        $this->ratings = $ratings;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getRatings(): array
+    {
+        return $this->ratings;
+    }
+
+    public function getStatus(): bool
+    {
+        return $this->checkedOut;
+    }
+
+    public function checkOut(): bool
+    {
+        return $this->checkedOut = true;
+    }
+
+    public function returnVideo(): bool
+    {
+        return $this->checkedOut = false;
+    }
+
+    public function receiveRating(float $rating): void
+    {
+        $this->ratings[] = $rating;
+    }
+}
+
+class VideoStore {
+    private array $inventory;
+
+    public function __construct(array $inventory = []){
+        $this->inventory = $inventory;
+    }
+
+    public function getInventory(): array{
+        return $this->inventory;
+    }
+
+    public function addToInventory(Video $video): void{
+        $this->inventory[]= $video;
+    }
+
+    public function checkOut(Video $video): bool{
+        return $video->checkOut();
+    }
+
+    public function returnVideo(Video $video): bool{
+        return $video->returnVideo();
+    }
+
+    public function receiveRating(Video $video, float $rating): void {
+        $video->receiveRating($rating);
+    }
+
+    public function averageRating(Video $video):float{
+        $averageRating = round((array_sum($video->getRatings()) / count($video->getRatings())), 2);
+        return $averageRating;
+    }
+
+    public function listInventory(){
+        $inventory = $this->getInventory();
+        foreach ($inventory as $video) {
+            echo $video->getTitle() . ", " . $this->averageRating($video) . ", ";
+            if($video->getStatus() === true) {
+                echo "checked out" . PHP_EOL;
+            } else {
+                echo "available" . PHP_EOL;
+            }
+        }
+    }
+}
+
+$movie1 = new Video("The Matrix");
+$movie2 = new Video("The Godfather II");
+$movie3 = new Video("Star Wars");
+
+$movie1->receiveRating(8);
+$movie2->receiveRating(5);
+$movie3->receiveRating(6);
+
+$store = new VideoStore();
+$store->addToInventory($movie1);
+$store->addToInventory($movie2);
+$store->addToInventory($movie3);
+
+$store->checkOut($movie2);
+$store->checkOut($movie1);
+$store->checkOut($movie3);
+
+$store->returnVideo($movie1);
+$store->receiveRating($movie3, 3);
+
+$store->listInventory();
+
+echo PHP_EOL . PHP_EOL;
+
+
+// EXERCISE 10
+
+
+
+echo "########## EXERCISE 10 #################"; echo PHP_EOL;
+
+class Account {
+    private $name;
+    private $balance;
+
+    public function __construct($name, $balance){
+        $this->name = $name;
+        $this->balance = $balance;
+    }
+
+    public function __toString(): string{
+        return $this->name . ", Balance: " . $this->balance();
+    }
+
+    public function balance(): float{
+        return $this->balance;
+    }
+
+    public function withdrawal($number): void{
+       $this->balance = $this->balance() - $number;
+    }
+
+    public function deposit($number): void{
+        $this->balance = $this->balance() + $number;
+    }
+
+    public function transfer(Account $from, Account $to, float $howMuch): void {
+        $from->withdrawal($howMuch);
+        $to->deposit($howMuch);
+    }
+}
+
+$mattsAcc = new Account("Matt", 1000);
+$myAcc = new Account("My account", 0);
+$mattsAcc->withdrawal(100);
+$myAcc->deposit(100);
+
+echo $mattsAcc . PHP_EOL . $myAcc;
+echo PHP_EOL;
+
+$a = new Account("A", 100);
+$b = new Account("B", 0);
+$c = new Account("C", 0);
+
+$a->transfer($a, $b, 50);
+$b->transfer($b, $c, 25);
+echo $a . PHP_EOL . $b . PHP_EOL . $c;
+
+echo PHP_EOL . PHP_EOL;
