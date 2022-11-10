@@ -1,0 +1,22 @@
+<?php
+
+class Weapon {
+    private string $name;
+    private array $beats;
+
+    public function __construct($name){
+        $this->name = $name;
+    }
+
+    public function getName(): string{
+        return $this->name;
+    }
+
+    public function setBeats(Weapon $weapon): void{
+        $this->beats[]= $weapon;
+    }
+
+    public function getBeats(Weapon $weapon): bool{
+        return in_array($weapon, $this->beats);
+    }
+}
