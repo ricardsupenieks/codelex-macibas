@@ -1,0 +1,73 @@
+<?php
+require_once "Weapon.php";
+require_once "Game.php";
+
+$rock = new Weapon("Rock");
+$scissors = new Weapon("Scissors");
+$paper = new Weapon("Paper");
+$lizard = new Weapon("Lizard");
+$spock = new Weapon("Spock");
+
+$rock->setBeats($scissors);
+$rock->setBeats($lizard);
+
+$scissors->setBeats($paper);
+$scissors->setBeats($lizard);
+
+$paper->setBeats($rock);
+$paper->setBeats($spock);
+
+$lizard->setBeats($spock);
+$lizard->setBeats($paper);
+
+$spock->setBeats($scissors);
+$spock->setBeats($rock);
+
+
+$weapons = [
+    $rock,
+    $scissors,
+    $paper,
+    $lizard,
+    $spock,
+];
+
+foreach ($weapons as $key => $weapon) {
+    echo "[$key] {$weapon->getName()}" . PHP_EOL;
+}
+
+echo "Choose your weapon: ";
+
+$playerWeapon = null;
+
+while($playerWeapon === null) {
+    $answer = readline();
+    if ($answer > count($weapons) - 1 || $answer < 0) {
+        echo "Invalid selection.";
+        echo "Choose your weapon: ";
+    } else {
+        $playerWeapon = $weapons[$answer]                                                                                                                                                                                         ;
+    }
+}
+
+$opponentWeapon = $weapons[array_rand($weapons)];
+
+$game = new Game($playerWeapon, $opponentWeapon);
+$winner = $game->getResults();
+
+echo "{$playerWeapon->getName()}" . " VS " . "{$opponentWeapon->getName()}" . PHP_EOL;
+
+if ($winner === null) {
+    echo "Draw";
+    exit;
+}
+
+if ($winner === $playerWeapon) {
+    echo "Player 1 wins" . PHP_EOL;
+    exit;
+}
+
+if ($winner === $opponentWeapon) {
+    echo "Player 2 wins" . PHP_EOL;
+    exit;
+}
