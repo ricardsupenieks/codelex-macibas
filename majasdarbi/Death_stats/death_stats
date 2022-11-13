@@ -3,7 +3,7 @@ require_once "Data.php";
 require_once "Row.php";
 require_once "Table.php";
 
-$csv = file('/home/ricards/Downloads/vtmec-causes-of-death.csv');
+$csv = file(''); // input csv file location
 $database = [];
 
 foreach ($csv as $line) {
