@@ -4,10 +4,10 @@ $city = readline("Enter city: ");
 
 
 $apiKey = "" ;
-$apiURL = "http://api.openweathermap.org/geo/1.0/direct?q=$city&limit=1&appid=$apiKey";
+$apiCityURL = "http://api.openweathermap.org/geo/1.0/direct?q=$city&limit=1&appid=$apiKey";
 
 
-$content = file_get_contents($apiURL);
+$content = file_get_contents($apiCityURL);
 $contentDecoded = json_decode($content, true);
 
 
@@ -15,8 +15,8 @@ $lat = $contentDecoded[0]["lat"] ;
 $lon = $contentDecoded[0]["lon"];
 
 
-$apiURL2 = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey";
-$data = file_get_contents($apiURL2);
+$apiPreciseURL = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey";
+$data = file_get_contents($apiPreciseURL);
 $result= json_decode($data, true);
 
 
@@ -27,3 +27,4 @@ $weather = $result ["weather"][0]["main"];
 echo "Weather in $city" . PHP_EOL;
 echo "Temperature = $temperature degrees Celsius" . PHP_EOL;
 echo "Weather = $weather" . PHP_EOL;
+
