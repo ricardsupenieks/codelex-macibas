@@ -1,13 +1,14 @@
 <?php
 
 $screen = [
-    ' ',' ',' ',' ',' ',
-    ' ',' ',' ',' ',' ',
-    ' ',' ',' ',' ',' ',
-    ' ',' ',' ',' ',' '
+    ' ', ' ', ' ', ' ', ' ',
+    ' ', ' ', ' ', ' ', ' ',
+    ' ', ' ', ' ', ' ', ' ',
+    ' ', ' ', ' ', ' ', ' '
 ];
 
-function displayScreen(){
+function displayScreen()
+{
     global $screen;
 
     echo "_____________________ \n";
@@ -20,91 +21,42 @@ function displayScreen(){
     echo PHP_EOL;
 }
 
-$symbols = ['*', '+', '%', '$'];
+$symbols = ['*' => 200, '+' => 500, '%' => 1000, '$' => 2000];
 
-//$combinations = [
-//    [[0],[1],[2],[3],[4]],
-//    [[5],[6],[7],[8],[9]],
-//    [[10],[11],[12],[13],[14]],
-//
-//    [[0],[6],[12],[8],[4]],
-//    [[10],[6],[2],[8],[14]]
-//
-//];
+$combinations = [
+    [[0],[1],[2],[3],[4]],
+    [[5],[6],[7],[8],[9]],
+    [[10],[11],[12],[13],[14]],
 
-function symbolChecker($screenWindow, $symbol, $symbolValue) {
-    global $screen, $win, $totalCashWon;
+    [[0],[6],[12],[8],[4]],
+    [[10],[6],[2],[8],[14]]
 
-    if ($screen[$screenWindow] === $symbol) {
-        $win = $symbolValue * 100 * 0.2;
-        $totalCashWon[]= $win;
+];
 
+function winner()
+{
+    global $combinations, $symbols, $screen, $totalCashWon;
+
+    foreach ($combinations as $combination) {
+        $combinationCounter = 0;
+
+        [$window] = $combination[0];
+        $symbol = $screen[$window];
+
+        foreach ($combination as $position) {
+            [$x] = $position;
+            if ($screen[$x] !== $symbol) {
+                break;
+            }
+            $combinationCounter++;
+        }
+        if ($combinationCounter === 15 || $combinationCounter === 10 || $combinationCounter === 5) {
+            echo "WIN WIN WIN" . PHP_EOL;
+            $win = $symbols[$symbol] * $combinationCounter / 5;
+            $totalCashWon[] = $win;
+            echo "You've won $win$!" . PHP_EOL;
+        }
     }
-}
-
-function winner() {
-    global $screen, $winner, $win;
-
-    if ($screen[0] === $screen[1] && $screen[1] === $screen[2] && $screen[2] === $screen[3] && $screen[3] === $screen[4]) {
-        echo "WIN" . PHP_EOL;
-        symbolChecker(0, "*", 10);
-        symbolChecker(0, "+", 20);
-        symbolChecker(0, "%", 30);
-        symbolChecker(0, "$", 50);
-        echo "You've won {$win}$!" . PHP_EOL;
-
-    } else if ($screen[5] === $screen[6] && $screen[6] === $screen[7] && $screen[7] === $screen[8] && $screen[8] === $screen[9]) {
-        echo "WIN" . PHP_EOL;;
-        symbolChecker(5, "*", 10);
-        symbolChecker(5, "+", 20);
-        symbolChecker(5, "%", 30);
-        symbolChecker(5, "$", 50);
-        echo "You've won {$win}$!" . PHP_EOL;
-
-    } else if ($screen[10] === $screen[11] && $screen[11] === $screen[12] && $screen[12] === $screen[13] && $screen[13] === $screen[14]) {
-        echo "WIN" . PHP_EOL;;
-        symbolChecker(10, "*", 10);
-        symbolChecker(10, "+", 20);
-        symbolChecker(10, "%", 30);
-        symbolChecker(10, "$", 50);
-        echo "You've won {$win}$!" . PHP_EOL;
-
-    }
-
-
-    if ($screen[0] === $screen[6] && $screen[6] === $screen[12] && $screen[12] === $screen[8] && $screen[8] === $screen[4]) {
-        echo "WIN" . PHP_EOL;;
-        symbolChecker(0, "*", 10);
-        symbolChecker(0, "+", 20);
-        symbolChecker(0, "%", 30);
-        symbolChecker(0, "$", 50);
-        echo "You've won {$win}$!" . PHP_EOL;
-
-    } else if ($screen[10] === $screen[6] && $screen[6] === $screen[2] && $screen[2] === $screen[8] && $screen[8] === $screen[14]) {
-        echo "WIN" . PHP_EOL;
-        symbolChecker(10, "*", 10);
-        symbolChecker(10, "+", 20);
-        symbolChecker(10, "%", 30);
-        symbolChecker(10, "$", 50);
-        echo "You've won {$win}$!" . PHP_EOL;
-    }
-//    global $combinations, $symbols;
-//
-//    $conditionCounter = 0;
-//
-//    foreach ($symbols as $symbol) {
-//        foreach ($combinations as $combination) {
-//            foreach ($combination as $position) {
-//                if ($symbol !== $position) {
-//                    break;
-//                }
-//                $conditionCounter++;
-//            }
-//        }
-//        if ($conditionCounter === 4) {
-//            echo "Win";
-//        }
-//    }
 }
 
 echo "Each spin will cost 100$" . PHP_EOL;
@@ -145,22 +97,22 @@ while (true) {
 
         if ($playerCash - 100 * $timesSpun + array_sum($totalCashWon) < 100) {
             echo "Not enough cash to continue playing" . PHP_EOL;
-            echo "Would you like to insert more cash?  Yes \ No ";
+            echo "Would you like to insert more cash?  Yes (Enter) \ No (Any button)";
             echo PHP_EOL;
             $answer = readline();
             $answer = strtolower($answer);
-            if ($answer != "yes") {
+            if ($answer !== "") {
                 exit;
             } else {
                 break;
             }
         }
 
-        echo "Would you like to spin again?  Yes \ No ";
+        echo "Would you like to spin again?  Yes (Enter) \ No (Any button) ";
         echo PHP_EOL;
         $input = readline();
         $input = strtolower($input);
-        if ($input !== "yes") {
+        if ($input !== "") {
             exit;
         }
         $timesSpun++;
