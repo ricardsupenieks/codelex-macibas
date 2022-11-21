@@ -3,7 +3,7 @@
 require_once "Symbols.php";
 
 class Screen{
-    public array $screen = [' ', ' ', ' ', ' ', ' ',
+    private array $screen = [' ', ' ', ' ', ' ', ' ',
                                ' ', ' ', ' ', ' ', ' ',
                                ' ', ' ', ' ', ' ', ' '];
 
