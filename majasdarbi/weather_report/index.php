@@ -4,7 +4,7 @@ require_once "app/API.php";
 require_once "app/Data.php";
 
 $city = readline("Enter city: ");
-$apiKey = "8f89449f29a850cb16318e42cf140139";
+$apiKey = "";
 
 $api = new API($apiKey);
 $apiInfo = $api->getInfo($city);
