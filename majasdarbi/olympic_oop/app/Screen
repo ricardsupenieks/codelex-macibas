@@ -1,6 +1,6 @@
 <?php
 
-require_once "Symbols.php";
+require_once "app/Symbols.php";
 
 class Screen{
     private array $screen = [' ', ' ', ' ', ' ', ' ',
