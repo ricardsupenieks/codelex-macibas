@@ -1,3 +1,5 @@
+<?php
+
 class API {
 
     protected string $apiKey;
