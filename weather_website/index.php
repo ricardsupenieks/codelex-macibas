@@ -27,8 +27,6 @@ $result = $data->getData($lat, $lon);
 $temperature = number_format($result["main"]["temp"] - 273.15, 2);
 $weather = $result ["weather"][0]["main"];
 
-$time = Carbon::now();
-
 
 ?>
 
