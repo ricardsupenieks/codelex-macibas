@@ -3,10 +3,8 @@
 require_once "vendor/autoload.php";
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $route) {
-    $route->addRoute('GET', '/', [\App\Controllers\PersonsController::class, 'index']);
-    $route->addRoute('GET', '/persons', [\App\Controllers\PersonsController::class, 'index']);
-    $route->addRoute('GET', '/articles', [\App\Controllers\ArticlesController::class, 'index']);
-    $route->addRoute('GET', '/articles/create', [\App\Controllers\ArticlesController::class, 'create']);
+        $route->addRoute('GET', '/', [\App\Controllers\WeatherController::class, 'index']);
+
 
 
     // METHOD + URL
